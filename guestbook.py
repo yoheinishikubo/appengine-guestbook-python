@@ -7,6 +7,8 @@ from google.appengine.ext import ndb
 import jinja2
 import webapp2
 
+import hashlib
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -85,7 +87,7 @@ class Guestbook(webapp2.RequestHandler):
         if users.get_current_user():
             greeting.author = Author(
                     identity=users.get_current_user().user_id(),
-                    email=users.get_current_user().email())
+                    email=hashlib.md5(users.get_current_user().email().encode('utf-8')).hexdigest())
 
         greeting.content = self.request.get('content')
         greeting.put()
