@@ -1106,4 +1106,7 @@
     height: auto !important;
     overflow: visible !important;
   }
+  .navbar-fixed-top, .navbar-fixed-bottom {
+    position: static;
+  }
 }
